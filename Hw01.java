@@ -23,32 +23,35 @@ class BST
 		if (root == null)
 			return new Node(data);
 
-			return searchData(root, data);
-	}
-
-	public void delete(int data)
-	{
-		System.out.println("deleted" + data);
-	}
-
-	public void search(int data)
-	{
-		Node root = searchData(this.root, data);
-		System.out.println("searched for " + data);
-		System.out.println("Found " + root.data);
-	}
-
-	private Node searchData(Node root, int data)
-	{
-		if (this.root == null || this.root.data == data)
-			return this.root;
-
 		if (data < root.data)
 			root.leftChild = insertData(root.leftChild, data);
 		else if (data >= root.data)
 			root.rightChild = insertData(root.rightChild, data);
 
 		return root;
+	}
+
+	public void delete(int data)
+	{
+		System.out.println("deleted " + data);
+	}
+
+	public void search(int data)
+	{
+		Node temp = searchData(this.root, data);
+		System.out.println("searched for " + data);
+		System.out.println("Found " + temp.data);
+	}
+
+	private Node searchData(Node root, int data)
+	{
+		if (root == null || root.data == data)
+			return root;
+
+		if (root.data > data)
+			return searchData(root.leftChild, data);
+
+		return searchData(root.rightChild, data);
 	}
 
 	public void print()
@@ -79,14 +82,13 @@ public class Hw01
 			try
 			{
 				BufferedReader br = new BufferedReader(new FileReader(args[0]));
-				//processFile(br);
 
 				while ((readLine = br.readLine()) != null)
 				{
 					String [] splitLine = readLine.split(" ", 2);
 
 					for (int i = 0; i < splitLine.length; i++)
-						System.out.println("** " + splitLine[i] + " **");
+						System.out.println("*" + splitLine[i] + "*");
 
 					if (splitLine[0].equals("i"))
 						bst.insert(Integer.parseInt(splitLine[1]));
